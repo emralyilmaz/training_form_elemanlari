@@ -40,18 +40,33 @@ class _FormWidgetState extends State<FormWidget> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.all(25),
+        padding: EdgeInsets.all(40),
         child: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(
-                  icon: Icon(Icons.phone),
-                  labelText: "Telefon",
-                  labelStyle: TextStyle(color: Colors.green),
-                  hintText: "Lütfen telefon numaranızı giriniz.",
-                  hintStyle: TextStyle(color: Colors.blue)),
+              // validator işlemi sadece textformfield'larda çalısır.
+              validator: (value) {
+                if (value.isEmpty) {
+                  return "Lütfen yazı yazınız.";
+                } else {
+                  return null;
+                }
+              },
+              // decoration: InputDecoration(
+              //     icon: Icon(Icons.phone),
+              //     labelText: "Telefon",
+              //     labelStyle: TextStyle(color: Colors.green),
+              //     hintText: "Lütfen telefon numaranızı giriniz.",
+              //     hintStyle: TextStyle(color: Colors.blue)),
             ),
             TextFormField(
+              validator: (value) {
+                if (value.length > 4) {
+                  return "Lütfen en az 4 karakter yazınız.";
+                } else {
+                  return null;
+                }
+              },
               keyboardType: TextInputType.number,
               // obscureText: true,
               // decoration: InputDecoration(
@@ -92,7 +107,12 @@ class _FormWidgetState extends State<FormWidget> {
               child: RaisedButton(
                   child: Text("Tıkla"),
                   onPressed: () {
-                    FocusScope.of(context).requestFocus(myFocusNode);
+                    if (_formKey.currentState.validate()) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text("Kısıtlamadan Geçtiniz."),
+                      ));
+                    }
+                    // FocusScope.of(context).requestFocus(myFocusNode);
                   }),
             )
           ],
