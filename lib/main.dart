@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 main() => runApp(MaterialApp(
-      home: Home(),
+      home: Navi(),
       theme: ThemeData(primarySwatch: Colors.blue),
     ));
 
@@ -26,6 +26,15 @@ class _FormWidgetState extends State<FormWidget> {
   final _formKey = GlobalKey<FormState>();
   bool sval = true; // Switch value  için
   bool cval = true; // Checkbox value  için
+
+  FocusNode myFocusNode;
+  @override
+  void initState() {
+    super.initState();
+
+    myFocusNode = FocusNode();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -34,9 +43,13 @@ class _FormWidgetState extends State<FormWidget> {
         padding: EdgeInsets.all(30),
         child: Column(
           children: <Widget>[
+            TextFormField(
+              autofocus: true,
+            ),
             TextFormField(),
-            TextFormField(),
-            TextField(),
+            TextField(
+              focusNode: myFocusNode,
+            ),
             Row(
               children: <Widget>[
                 Switch(
@@ -56,11 +69,31 @@ class _FormWidgetState extends State<FormWidget> {
               ],
             ),
             Container(
-              padding: EdgeInsets.only(top: 40),
-              child: RaisedButton(child: Text("Tıkla"), onPressed: () {}),
+              padding: EdgeInsets.only(top: 30),
+              child: RaisedButton(
+                  child: Text("Tıkla"),
+                  onPressed: () {
+                    FocusScope.of(context).requestFocus(myFocusNode);
+                  }),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Navi extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: FlatButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            },
+            child: Text("Tıkla")),
       ),
     );
   }
