@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 main() => runApp(MaterialApp(
       home: Navi(),
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.red),
     ));
 
 class Home extends StatelessWidget {
@@ -40,15 +40,34 @@ class _FormWidgetState extends State<FormWidget> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(25),
         child: Column(
           children: <Widget>[
             TextFormField(
-              autofocus: true,
+              decoration: InputDecoration(
+                  icon: Icon(Icons.phone),
+                  labelText: "Telefon",
+                  labelStyle: TextStyle(color: Colors.green),
+                  hintText: "Lütfen telefon numaranızı giriniz.",
+                  hintStyle: TextStyle(color: Colors.blue)),
             ),
-            TextFormField(),
+            TextFormField(
+              keyboardType: TextInputType.number,
+              // obscureText: true,
+              // decoration: InputDecoration(
+              //   filled: true,
+              //   fillColor: Colors.yellow,
+              //   border: OutlineInputBorder(),
+              // )
+            ),
             TextField(
-              focusNode: myFocusNode,
+              textInputAction: TextInputAction.send,
+              textCapitalization: TextCapitalization.words,
+              textAlign: TextAlign.center,
+              cursorColor: Colors.green,
+              cursorWidth: 16,
+              cursorRadius: Radius.circular(4),
+              maxLength: 5,
             ),
             Row(
               children: <Widget>[
